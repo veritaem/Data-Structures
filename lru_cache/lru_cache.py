@@ -1,3 +1,5 @@
+from doubly_linked_list import DoublyLinkedList
+
 class LRUCache:
     """
     Our LRUCache class keeps track of the max number of nodes it
@@ -7,27 +9,45 @@ class LRUCache:
     to every node stored in the cache.
     """
     def __init__(self, limit=10):
-        pass
-
-    """
-    Retrieves the value associated with the given key. Also
-    needs to move the key-value pair to the end of the order
-    such that the pair is considered most-recently used.
-    Returns the value associated with the key or None if the
-    key-value pair doesn't exist in the cache.
-    """
+        self.storage = DoublyLinkedList()
+        self.di = {}
+        self.limit = limit
+    
+    """Retrieves the value associated with the given key."""
     def get(self, key):
-        pass
+        if key in self.di:
+            val = self.di[key]
+            current = self.storage.head
+            while current:
+                if current.value != val:
+                    current = current.next
+                self.storage.move_to_front(current)
+                return self.di[key]
+        else:
+            return None
 
-    """
-    Adds the given key-value pair to the cache. The newly-
-    added pair should be considered the most-recently used
-    entry in the cache. If the cache is already at max capacity
-    before this entry is added, then the oldest entry in the
-    cache needs to be removed to make room. Additionally, in the
-    case that the key already exists in the cache, we simply
-    want to overwrite the old value associated with the key with
-    the newly-specified value.
-    """
+    """adds to our dict and DLL"""
     def set(self, key, value):
-        pass
+        if len(self.storage) == 10:
+            self.storage.delete(self.storage.tail)
+        if key in self.di:
+            print(f'its here!! {self.di[key]}')
+            self.di[key] = value
+            current = self.storage.head
+            while current:
+                if current.value != self.di[key]:
+                    current = current.next
+            self.storage.move_to_front(current)
+        else:
+            #create key, move to front
+            self.di[key] = value
+            self.storage.add_to_head(value)
+
+valu = 'item 1'
+jim = LRUCache()
+jim.set(valu, 'a')
+print(jim.di)
+print(jim.get(valu), f'here is {valu}')
+jim.set(valu, 'flenderson')
+print(jim.get(valu), f'here is {valu}')
+
