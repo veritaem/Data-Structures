@@ -2,9 +2,10 @@
 as well as its next node in the List."""
 
 class ListNode:
-    def __init__(self, value, prev=None, next=None):
+    def __init__(self, key, value, prev=None, next=None):
         self.prev = prev
         self.value = value
+        self.key = key
         self.next = next
 
 
