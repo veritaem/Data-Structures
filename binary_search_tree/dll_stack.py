@@ -22,8 +22,3 @@ class Stack:
         else:
             return 0
 
-j = Stack()
-print(j.push(101))
-print(j.push(106))
-print(j.len())
-print(j.pop())
